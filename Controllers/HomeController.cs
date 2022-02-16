@@ -6,26 +6,40 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using bookstore.Models;
+using bookstore.Models.ViewModels;
 
 namespace bookstore.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        IBookstoreRepository _repository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IBookstoreRepository repository)
         {
-            _logger = logger;
+            _repository = repository;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int _page = 1)
         {
-            return View();
-        }
+            //@todo: Arbitrarily set, consider taking user input to set the perpage amount
+            const int BooksPerPage = 10;
 
-        public IActionResult Privacy()
-        {
-            return View();
+            var books = new BookListViewModel
+            {
+                BookList = _repository.BooksData
+                .OrderBy(book => book.Title)
+                .Skip((_page -1) * BooksPerPage)
+                .Take(BooksPerPage),
+
+                PageInfo = new PageInfo
+                {
+                    Items = _repository.BooksData.Count(),
+                    PerPage = BooksPerPage,
+                    CurrentPage = _page
+                }
+            };
+
+            return View(books);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
