@@ -25,13 +25,14 @@ namespace bookstore.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                //todo: remove connection string from code when you have a real database
                 optionsBuilder.UseSqlite("data source = Bookstore.sqlite");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //* I am leaving all of this key/constraint info in the code in case I want to scrap the db file and start out with the same structure. 
             modelBuilder.Entity<Books>(entity =>
             {
                 entity.HasKey(e => e.BookId);

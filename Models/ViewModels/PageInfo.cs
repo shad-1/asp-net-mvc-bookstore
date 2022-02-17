@@ -1,6 +1,9 @@
 ﻿using System;
 namespace bookstore.Models.ViewModels
-{
+{   
+    /**
+    * Bundle informaiton for pagination
+    */
 	public class PageInfo
 	{
 		public int Items { get; set; }

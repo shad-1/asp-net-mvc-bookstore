@@ -23,7 +23,7 @@ namespace bookstore.Controllers
         {
             //@todo: Arbitrarily set, consider taking user input to set the perpage amount
             const int BooksPerPage = 10;
-
+            
             var books = new BookListViewModel
             {
                 BookList = _repository.BooksData
@@ -41,7 +41,7 @@ namespace bookstore.Controllers
 
             return View(books);
         }
-
+        //* I prefer to leave developer exceptions on while I'm working on a project
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
