@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Text;
 using bookstore.Models.ViewModels;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -29,21 +32,25 @@ namespace bookstore.Infrastructure
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
 			//base.Process(context, output);
-			IUrlHelper helper = urlHelperFactory.GetUrlHelper(viewContext); //@todo: Figure out what this does and why we shouldn't call the base method
-            TagBuilder _output = new TagBuilder("div");
+			IUrlHelper helper = urlHelperFactory.GetUrlHelper(viewContext); //@todo: Figure out what this does and why we shouldn\"t call the base method
+
+			//Use bootstrap styles for paginaiton (thus the stringbuilder)
+            StringBuilder _output = new StringBuilder(
+				"<nav aria-label=\"Results Navigation\">" +
+					"<ul class=\"pagination\">");
 
 			for (int i = 1; i <= PageInfo.PageCount; i++)
             {
-				TagBuilder builder = new TagBuilder("a");
-				builder.InnerHtml.Append(i.ToString());
-				builder.Attributes["href"] = helper.Action(PageAction, new { _page = i });
-				builder.AddCssClass("mx-4");
-				_output.InnerHtml.AppendHtml(builder);
+				_output.Append(
+					"<li class=\"page-item\">" +
+					$"<a class=\"page-link\" href={helper.Action(PageAction, new { _page = i })}>{i}</a></li>"
+					);
             }
-			output.Content.AppendHtml(_output.InnerHtml);
-        }
+			_output.Append("</ul></nav>");
+			//This was tricky. I had to convert the string to an HtmlString, else it would render as plain text.
+			output.Content.SetHtmlContent(new HtmlString(_output.ToString()));
 
-        //@todo: add bootstrap pagination styling
+		}
     }
 }
 
