@@ -34,6 +34,9 @@ namespace bookstore.Infrastructure
 			//base.Process(context, output);
 			IUrlHelper helper = urlHelperFactory.GetUrlHelper(viewContext); //@todo: Figure out what this does and why we shouldn\"t call the base method
 
+			//TODO: Consider using the normal tag builder objects and applying properties.
+			//TODO: Add 'Prev' and 'Next' buttons to be flashy...
+
 			//Use bootstrap styles for paginaiton (thus the stringbuilder)
             StringBuilder _output = new StringBuilder(
 				"<nav aria-label=\"Results Navigation\">" +
@@ -41,9 +44,11 @@ namespace bookstore.Infrastructure
 
 			for (int i = 1; i <= PageInfo.PageCount; i++)
             {
+				_output.Append( //conditionally add active state
+					i == PageInfo.CurrentPage ? "<li class=\"page-item active\">" : "<li class=\"page-item\">"
+					);
 				_output.Append(
-					"<li class=\"page-item\">" +
-					$"<a class=\"page-link\" href={helper.Action(PageAction, new { _page = i })}>{i}</a></li>"
+					$"<a class=\"page-link\" href={helper.Action(PageAction, new { pageNum = i })}>{i}</a></li>"
 					);
             }
 			_output.Append("</ul></nav>");

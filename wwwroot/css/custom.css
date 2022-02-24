@@ -6,3 +6,25 @@
     position: absolute;
     bottom: -4rem;
 }This was to keep them from floating up, but now the data is large enough to not need this. */
+
+.h-min-content {
+    height: min-content;
+}
+
+.h-vh {
+ height: calc(100vh - 67px - 57px - 60px); /*viewport - header - navbar - footer. Hacky, yes. But I don't want to rework all the asp.net default styling. */
+}
+
+.f-1_half {
+    font-size: 1.5rem;
+}
+
+.filter-item {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--dark);
+}
+    .filter-item:hover, .filter-item.active {
+        text-decoration: none;
+        color: var(--cyan);
+    }

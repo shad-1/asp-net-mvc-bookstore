@@ -56,8 +56,29 @@ namespace bookstore
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                   name: "categorizedPaged",
+                   pattern: "Category/{category}/Page/{pageNum}",
+                   defaults: new { controller = "Home", action = "Index" }
+                );
+
+                endpoints.MapControllerRoute(
+                   name: "categorized",
+                   pattern: "Category/{category}",
+                   defaults: new { controller = "Home", action = "Index" }
+                );
+
+                endpoints.MapControllerRoute(
+                   name: "pagination",
+                   pattern: "Page/{pageNum}",
+                   defaults: new { controller = "Home", action = "Index" }
+                );
+
+                endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}"
+                );
+
+               
             });
         }
     }
