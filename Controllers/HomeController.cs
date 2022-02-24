@@ -12,32 +12,39 @@ namespace bookstore.Controllers
 {
     public class HomeController : Controller
     {
-        IBookstoreRepository _repository;
+        private IBookstoreRepository _repository;
 
         public HomeController(IBookstoreRepository repository)
         {
             _repository = repository;
         }
 
-        public IActionResult Index(int _page = 1)
+        public IActionResult Index(int pageNum = 1, string category = "All")
         {
             //@todo: Arbitrarily set, consider taking user input to set the perpage amount
             const int BooksPerPage = 10;
-            
+
+            // Isolate filtration for use in both models
+            var filteredBooks = _repository.BooksData.Where(book => book.Category == category || category.ToUpper() == "ALL");
+
+
             var books = new BookListViewModel
             {
-                BookList = _repository.BooksData
+                BookList = filteredBooks
                 .OrderBy(book => book.Title)
-                .Skip((_page -1) * BooksPerPage)
+                .Skip((pageNum -1) * BooksPerPage)
                 .Take(BooksPerPage),
 
                 PageInfo = new PageInfo
                 {
-                    Items = _repository.BooksData.Count(),
+                    Items = filteredBooks.Count(),
                     PerPage = BooksPerPage,
-                    CurrentPage = _page
+                    CurrentPage = pageNum
                 }
             };
+
+            //Selected Category for filter builder
+            ViewBag.SelectedCategory = category;
 
             return View(books);
         }

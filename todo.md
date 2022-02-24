@@ -1,0 +1,9 @@
+- Card styling
+- Filter Categories
+	- Button stays highlighted when clicked
+- URL routing with endpoint patterns
+- Fix pagination buttons (styling and placement, probably also highlighted when clicked)
+- Book summary in partial view
+- Session
+- Cart
+- Continue shopping

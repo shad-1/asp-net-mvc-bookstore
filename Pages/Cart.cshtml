@@ -1,0 +1,43 @@
+@page
+@model bookstore.Pages.CartModel
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h1>Cart</h1>
+
+
+<table class="table table-hover table-bordered table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Book</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in @Model.Cart.Books)
+        {
+            <tr>
+                <th scope="row">@book.Book.Title - @book.Book.Author</th>
+                <td>@book.Qty</td>
+                <td>$@(Math.Round(book.Book.Price, 2).ToString("#.00"))</td>
+                <td>$@(Math.Round(book.Qty * book.Book.Price, 2).ToString("#.00"))</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <th colspan="3">Total:</th>
+        <td>$@(Math.Round(Model.Cart.GetSum(), 2).ToString("#.00"))</td>
+    </tfoot>
+</table>
+
+
+<div class="d-flex justify-content-end">
+    <a href="@Model.ReturnUrl" class="btn btn-secondary">Keep Shopping</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
