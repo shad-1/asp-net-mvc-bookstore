@@ -13,7 +13,7 @@ namespace bookstore.Pages
     {
 
         public IBookstoreRepository _repository { get; set; }
-        public Cart _cart { get; set; }
+        public Cart Cart { get; set; }
         public string ReturnUrl { get; set; }
 
         public CartModel(IBookstoreRepository repo)
@@ -23,10 +23,10 @@ namespace bookstore.Pages
             
         }
 
-        public void OnGet(string _returnUrl)
+        public void OnGet(string _returnUrl) //this param name needs to match what will be in the URL, else it will always come back "/". 
         {
             ReturnUrl = _returnUrl ?? "/";
-            _cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
+            Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
         }
 
         public IActionResult OnPost(int bookId, string ReturnUrl)
@@ -35,12 +35,12 @@ namespace bookstore.Pages
                 .FirstOrDefault(book => book.BookId == bookId);
 
             //Get the cart to manipulate
-            _cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
+            Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
 
-            _cart.AddItem(book, 1);
+            Cart.AddItem(book, 1);
 
             //update the cart in the session file
-            HttpContext.Session.SetJson("cart", _cart);
+            HttpContext.Session.SetJson("cart", Cart);
 
             return RedirectToPage( new {_returnUrl = ReturnUrl});
         }

@@ -2,8 +2,10 @@
     @model Books
 }
 
+@*This serves as a card of sorts, bundling book info*@
+@* todo: make generic for other item types? *@
 <div class="my-4 p-relative card p-4">
-    @*This serves as a card of sorts, bundling book info*@
+
     <div class="d-flex justify-content-between my-2">
         <h5>@Model.Title</h5>
         <div>@Model.Author</div>

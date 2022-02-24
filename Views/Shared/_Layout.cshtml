@@ -22,7 +22,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        
+                        @* Todo: add navigation to cart in menu bar:
+
+                                <form method="post" asp-page="/Cart">
+            <input type="hidden" asp-for="@Model.BookId" />
+            <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+
+            <button type="submit" class="btn btn-outline-primary add-to-cart">Add to Cart</button>
+        </form>
+                        *@
                     </ul>
                 </div>
             </div>

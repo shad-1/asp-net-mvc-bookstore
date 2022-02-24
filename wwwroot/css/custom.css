@@ -2,10 +2,7 @@
     min-height: 50vh;
     position: relative;
 }
-/*.page-navigation {
-    position: absolute;
-    bottom: -4rem;
-}This was to keep them from floating up, but now the data is large enough to not need this. */
+
 .p-relative {
     position: relative;
 }
