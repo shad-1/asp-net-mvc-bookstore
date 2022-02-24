@@ -23,5 +23,10 @@
 
     <div class="text-center"><strong>Price: $@Model.Price</strong></div>
 
-    <button class="btn btn-outline-primary add-to-cart">Add to Cart</button>
+    <form method="post" asp-page="/Cart">
+        <input type="hidden" asp-for="@Model.BookId" />
+        <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+
+        <button type="submit" class="btn btn-outline-primary add-to-cart">Add to Cart</button>
+    </form>
 </div>

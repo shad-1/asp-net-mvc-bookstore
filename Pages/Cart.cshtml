@@ -1,0 +1,19 @@
+@page
+@model bookstore.Pages.CartModel
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h1>Cart</h1>
+
+
+@Model._cart.Books.Count()
+
+
+<div class="d-flex justify-content-end">
+    <a href="@Model.ReturnUrl" class="btn btn-secondary">Keep Shopping</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
