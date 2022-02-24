@@ -31,6 +31,8 @@ namespace bookstore
                 options.UseSqlite(Configuration["ConnectionStrings:Sqlite"]);
             });
             services.AddScoped<IBookstoreRepository, EFBookstoreRepository>();
+
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,7 +80,7 @@ namespace bookstore
                     pattern: "{controller=Home}/{action=Index}/{id?}"
                 );
 
-               
+                endpoints.MapRazorPages();
             });
         }
     }

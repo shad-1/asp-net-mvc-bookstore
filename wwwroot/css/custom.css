@@ -6,6 +6,9 @@
     position: absolute;
     bottom: -4rem;
 }This was to keep them from floating up, but now the data is large enough to not need this. */
+.p-relative {
+    position: relative;
+}
 
 .h-min-content {
     height: min-content;
@@ -28,3 +31,9 @@
         text-decoration: none;
         color: var(--cyan);
     }
+
+.add-to-cart {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+}
