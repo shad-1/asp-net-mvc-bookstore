@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace bookstore.Models
 {
-	public class Cart
+    public class Cart
 	{
 		public Cart()
 		{
 		}
 
-        public List<LineItem> Books { get; set; } = new List<LineItem>(); //instantiate outside of ctor? Should it be static?
+        public List<LineItem> Books { get; set; } = new List<LineItem>();
 
-        public void AddItem (Books book, int qty)
+        public virtual void AddItem (Books book, int qty)
         {
-            LineItem item = Books
+            LineItem currentItem = Books
                 .Where(b => b.Book.BookId == book.BookId)
                 .FirstOrDefault();
 
-            if (item == null)
+            if (currentItem == null)
             {
                 Books.Add(
                     new LineItem
@@ -30,8 +31,32 @@ namespace bookstore.Models
             }
             else
             {
-                item.Qty += qty;
+                currentItem.Qty += qty;
             }
+        }
+
+        public virtual void DecrementQty (Books book)
+        {
+            LineItem currentItem = Books
+                .Where(l => l.Book.BookId == book.BookId)
+                .FirstOrDefault();
+
+            currentItem.Qty -= 1;
+
+            if (currentItem.Qty < 1)
+            {
+                RemoveItem(book);
+            }
+        }
+
+        public virtual void RemoveItem (Books book)
+        {
+            Books.RemoveAll(l => l.Book.BookId == book.BookId);
+        }
+
+        public virtual void ClearCart ()
+        {
+            Books.Clear();
         }
 
         public decimal GetSum()
@@ -42,6 +67,7 @@ namespace bookstore.Models
 
 	public class LineItem
     {
+        [Key]
         public int LineItemId { get; set; }
         public int Qty { get; set; }
         public Books Book { get; set; }

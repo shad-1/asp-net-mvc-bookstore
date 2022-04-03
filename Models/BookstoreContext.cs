@@ -20,6 +20,7 @@ namespace bookstore.Models
         }
 
         public virtual DbSet<Books> Books { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -24,6 +24,14 @@
                 <td>@book.Qty</td>
                 <td>$@(Math.Round(book.Book.Price, 2).ToString("#.00"))</td>
                 <td>$@(Math.Round(book.Qty * book.Book.Price, 2).ToString("#.00"))</td>
+
+                <td class="text-center">
+                    <form method="post" asp-page-handler="Remove">
+                        <input type="hidden" name="bookId" value="@book.Book.BookId" />
+                        <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
+                        <button type="submit" class="btn btn-small btn-danger">Remove</button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>
@@ -35,7 +43,8 @@
 
 
 <div class="d-flex justify-content-end">
-    <a href="@Model.ReturnUrl" class="btn btn-secondary">Keep Shopping</a>
+    <a href="@Model.ReturnUrl" class="btn btn-secondary mx-4">Keep Shopping</a>
+    <a asp-controller="Checkout" asp-action="Checkout" class="btn btn-primary" >Checkout</a>
 </div>
 
 @section Scripts {

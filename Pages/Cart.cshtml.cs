@@ -12,37 +12,37 @@ namespace bookstore.Pages
     public class CartModel : PageModel
     {
 
-        public IBookstoreRepository _repository { get; set; }
+        public IBookstoreRepository Repository { get; set; }
         public Cart Cart { get; set; }
         public string ReturnUrl { get; set; }
 
-        public CartModel(IBookstoreRepository repo)
+        public CartModel(IBookstoreRepository repo, Cart cart)
         {
-            _repository = repo;
-            //what is it about the HTTPContext which disallows me from instantiating the cart here? 
+            Repository = repo;
+            //what is it about the HTTPContext which disallows me from instantiating the cart here?
+            Cart = cart;
             
         }
 
         public void OnGet(string _returnUrl) //this param name needs to match what will be in the URL, else it will always come back "/". 
         {
             ReturnUrl = _returnUrl ?? "/";
-            Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
         }
 
         public IActionResult OnPost(int bookId, string ReturnUrl)
         {
-            var book = _repository.BooksData
+            var book = Repository.BooksData
                 .FirstOrDefault(book => book.BookId == bookId);
-
-            //Get the cart to manipulate
-            Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
 
             Cart.AddItem(book, 1);
 
-            //update the cart in the session file
-            HttpContext.Session.SetJson("cart", Cart);
+            return RedirectToPage( new { ReturnUrl });
+        }
 
-            return RedirectToPage( new {_returnUrl = ReturnUrl});
+        public IActionResult OnPostRemove(int bookId, string ReturnUrl)
+        {
+            Cart.RemoveItem(Cart.Books.First(l => l.Book.BookId == bookId).Book);
+            return RedirectToPage(new { ReturnUrl });
         }
     }
 }

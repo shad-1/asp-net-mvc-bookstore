@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Bookstore</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/custom.css" />
 </head>
@@ -17,20 +19,24 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @* Todo: add navigation to cart in menu bar:
-
-                                <form method="post" asp-page="/Cart">
-            <input type="hidden" asp-for="@Model.BookId" />
-            <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-
-            <button type="submit" class="btn btn-outline-primary add-to-cart">Add to Cart</button>
-        </form>
-                        *@
+                    </ul>
+                    <ul class="navbar-nav flex-grow-1 justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark cart-total" asp-page="/Cart">
+                                <span class="material-icons">
+                                    shopping_cart
+                                </span>
+                                @if (ViewBag.OrderTotal > 0)
+                                    {
+                                <strong>@ViewBag.OrderTotal.ToString("#.00")</strong>
+                                    }
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

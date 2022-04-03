@@ -34,3 +34,8 @@
     bottom: 24px;
     right: 24px;
 }
+
+.cart-total {
+    line-height: 100%;
+    text-align: center;
+}

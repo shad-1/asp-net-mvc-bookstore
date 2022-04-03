@@ -13,10 +13,12 @@ namespace bookstore.Controllers
     public class HomeController : Controller
     {
         private IBookstoreRepository _repository;
+        private Cart _cart;
 
-        public HomeController(IBookstoreRepository repository)
+        public HomeController(IBookstoreRepository repository, Cart cart)
         {
             _repository = repository;
+            _cart = cart;
         }
 
         public IActionResult Index(int pageNum = 1, string category = "All")
@@ -45,6 +47,7 @@ namespace bookstore.Controllers
 
             //Selected Category for filter builder
             ViewBag.SelectedCategory = category;
+            ViewBag.OrderTotal = _cart.GetSum();
 
             return View(books);
         }
