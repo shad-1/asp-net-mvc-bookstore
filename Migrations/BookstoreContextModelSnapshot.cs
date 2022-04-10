@@ -99,9 +99,6 @@ namespace bookstore.Migrations
                     b.Property<string>("Address2")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("Anonymous")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -111,6 +108,9 @@ namespace bookstore.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasMaxLength(20);
+
+                    b.Property<bool>("Gift")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
