@@ -1,0 +1,34 @@
+﻿@page "/admin/books/detail/{id:long}"
+
+<h3 class="my-4">Details</h3>
+
+<table class="table table-striped table-bordered mb-4">
+    <tbody>
+        <tr><th>ID:</th><td>@b.BookId</td></tr>
+        <tr><th>ISBN:</th><td>@b.Isbn</td></tr>
+        <tr><th>Title:</th><td>@b.Title</td></tr>
+        <tr><th>Author:</th><td>@b.Author</td></tr>
+        <tr><th>Category:</th><td>@b.Category</td></tr>
+        <tr><th>Classification:</th><td>@b.Classification</td></tr>
+        <tr><th>Pages:</th><td>@b.PageCount</td></tr>
+        <tr><th>Publisher:</th><td>@b.Publisher</td></tr>
+        <tr><th>Price:</th><td>$@b.Price.ToString("#.00")</td></tr>
+    </tbody>
+</table>
+
+<NavLink class="btn btn-warning" href="@($"/admin/books/edit/{id:long}")">Edit</NavLink>
+<NavLink class="btn btn-secondary" href="/admin/books">Back</NavLink>
+
+@code {
+    [Inject]
+    public IBookstoreRepository repo { get; set; }
+    [Parameter]
+    public long id { get; set; }
+    public Book b { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        b = repo.BooksData.FirstOrDefault(b => b.BookId == id);
+    }
+}
+

@@ -1,0 +1,37 @@
+﻿@inherits LayoutComponentBase
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <NavLink class="navbar-brand" href="/admin"> Bookstore Administration</NavLink>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <NavLink class="nav-link text-dark" href="/admin">Administration Home</NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/">Bookstore Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container-fluid">
+    <div class="row p-2">
+        <div class="col-3 d-flex flex-column">
+            <NavLink class="btn btn-outline-primary" href="/admin/books"
+                     ActiveClass="btn-primary text-white">Books</NavLink>
+            <NavLink class="btn btn-outline-primary mt-2" href="/admin/transactions"
+                     ActiveClass="btn-primary text-white">Transactions</NavLink>
+        </div>
+        <div class="col">
+            @Body
+        </div>
+    </div>
+</div>

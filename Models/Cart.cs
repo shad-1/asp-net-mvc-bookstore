@@ -13,7 +13,7 @@ namespace bookstore.Models
 
         public List<LineItem> Books { get; set; } = new List<LineItem>();
 
-        public virtual void AddItem (Books book, int qty)
+        public virtual void AddItem (Book book, int qty)
         {
             LineItem currentItem = Books
                 .Where(b => b.Book.BookId == book.BookId)
@@ -35,7 +35,7 @@ namespace bookstore.Models
             }
         }
 
-        public virtual void DecrementQty (Books book)
+        public virtual void DecrementQty (Book book)
         {
             LineItem currentItem = Books
                 .Where(l => l.Book.BookId == book.BookId)
@@ -49,7 +49,7 @@ namespace bookstore.Models
             }
         }
 
-        public virtual void RemoveItem (Books book)
+        public virtual void RemoveItem (Book book)
         {
             Books.RemoveAll(l => l.Book.BookId == book.BookId);
         }
@@ -70,7 +70,7 @@ namespace bookstore.Models
         [Key]
         public int LineItemId { get; set; }
         public int Qty { get; set; }
-        public Books Book { get; set; }
+        public Book Book { get; set; }
     }
 }
 

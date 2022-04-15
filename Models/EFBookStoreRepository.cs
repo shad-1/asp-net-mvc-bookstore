@@ -13,7 +13,7 @@ namespace bookstore.Models
 			_context = context;
 		}
 
-        public IQueryable<Books> BooksData
+        public IQueryable<Book> BooksData
         {
             get
             {
@@ -23,13 +23,8 @@ namespace bookstore.Models
 
         public IQueryable<Transaction> Transactions => _context.Transactions.Include(transaction => transaction.LineItems).ThenInclude(item => item.Book);
 
-        public void SaveTransaction(Transaction t)
+        public void TrySaveContext()
         {
-            _context.AttachRange(t.LineItems.Select(item => item.Book));
-
-            if (t.ID == 0)
-                _context.Transactions.Add(t);
-
             try
             {
                 _context.SaveChanges();
@@ -38,6 +33,32 @@ namespace bookstore.Models
             {
                 Console.WriteLine(e);
             }
+        }
+
+        public void SaveTransaction(Transaction t)
+        {
+            _context.AttachRange(t.LineItems.Select(item => item.Book));
+
+            if (t.ID == 0)
+                _context.Transactions.Add(t);
+            TrySaveContext();
+        }
+
+        public void SaveBook(Book b)
+        {
+            TrySaveContext();
+        }
+
+        public void CreateBook(Book b)
+        {
+            _context.Books.Add(b);
+            TrySaveContext();
+        }
+
+        public void DeleteBook(Book b)
+        {
+            _context.Books.Remove(b);
+            TrySaveContext();
         }
     }
 }

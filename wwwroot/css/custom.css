@@ -39,3 +39,8 @@
     line-height: 100%;
     text-align: center;
 }
+
+.button-container {
+    display: inline-flex;
+    justify-content: center;
+}

@@ -17,6 +17,7 @@
     <None Remove="Pages\" />
     <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
     <None Remove="Views\Checkout\" />
+    <None Remove="Pages\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.22" />
@@ -36,5 +37,6 @@
     <Folder Include="Views\Home\" />
     <Folder Include="Pages\" />
     <Folder Include="Views\Checkout\" />
+    <Folder Include="Pages\Admin\" />
   </ItemGroup>
 </Project>

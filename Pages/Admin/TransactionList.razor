@@ -1,0 +1,59 @@
+﻿<table class="table table-sm table-striped table-bordered">
+
+    <thead>
+        <tr>
+            <th colspan="5">@Title</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Transactions?.Count() > 0)
+        {
+            foreach (Transaction t in Transactions)
+            {
+            <tr>
+                <td>@t.Name</td>
+                <td>@t.Zip</td>
+                <th>Book</th>
+                <th>Quantity</th>
+                <th>Shipment Status</th>
+            </tr>
+                foreach (LineItem item in t.LineItems)
+                {
+                <tr>
+                    <td colspan="2"></td>
+                    <td>@item.Book.Title</td>
+                    <td>@item.Qty</td>
+
+                    <td colspan="1">
+                        <div class="button-container">
+                            <button class="btn btn-sm btn-success" @onclick="@(x => ChangeShipmentStatus.InvokeAsync(t.ID))">@ButtonLabel</button>
+                        </div>
+                        
+                    </td>
+                </tr>
+                }
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center">No Transactions to Display.</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = "Transactions";
+    [Parameter]
+    public IEnumerable<Transaction> Transactions { get; set; }
+    [Parameter]
+    public string ButtonLabel { get; set; } = "Shipped";
+    [Parameter]
+    public EventCallback<int> ChangeShipmentStatus { get; set; }
+}
+

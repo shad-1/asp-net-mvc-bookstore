@@ -21,6 +21,10 @@ namespace bookstore.Controllers
             _cart = cart;
         }
 
+        [Route("/")]
+        [Route("Home")]
+        [Route("Home/page/{pageNum}")]
+        [Route("Home/page/{pageNum}/category/{category}")]
         public IActionResult Index(int pageNum = 1, string category = "All")
         {
             //@todo: Arbitrarily set, consider taking user input to set the perpage amount

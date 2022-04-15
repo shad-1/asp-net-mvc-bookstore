@@ -26,19 +26,19 @@ namespace bookstore.Models
             Session.SetJson("Cart", this);
         }
 
-        public override void AddItem(Books book, int qty)
+        public override void AddItem(Book book, int qty)
         {
             base.AddItem(book, qty);
             UpdateCartInSession();
         }
 
-        public override void RemoveItem(Books book)
+        public override void RemoveItem(Book book)
         {
             base.RemoveItem(book);
             UpdateCartInSession();
         }
 
-        public override void DecrementQty(Books book)
+        public override void DecrementQty(Book book)
         {
             base.DecrementQty(book);
             UpdateCartInSession();

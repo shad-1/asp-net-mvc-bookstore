@@ -1,9 +1,10 @@
-@page
+﻿@page
 @model bookstore.Pages.CartModel
 @{
     ViewData["Title"] = "Cart";
 }
 
+<div class="container my-4 pt-4">
 <h1>Cart</h1>
 
 
@@ -50,3 +51,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+</div>

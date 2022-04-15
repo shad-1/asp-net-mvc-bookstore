@@ -9,8 +9,8 @@ using bookstore.Models;
 namespace bookstore.Migrations
 {
     [DbContext(typeof(BookstoreContext))]
-    [Migration("20220410060725_fix_prop")]
-    partial class fix_prop
+    [Migration("20220415035920_addedshipability")]
+    partial class addedshipability
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -118,6 +118,9 @@ namespace bookstore.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
+
+                    b.Property<bool>("Shipped")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("State")
                         .IsRequired()

@@ -1,0 +1,41 @@
+﻿@page "/admin/transactions";
+@inherits OwningComponentBase<IBookstoreRepository>
+
+<TransactionList Title="Unshipped Orders" Transactions="UnshippedOrders" ButtonLabel="Shipped" ChangeShipmentStatus="MarkOrderAsShipped"></TransactionList>
+
+<TransactionList Title="Shipped Orders" Transactions="ShippedOrders" ButtonLabel="Not Shipped" ChangeShipmentStatus="MarkOrderAsUnshipped"></TransactionList>
+
+<button class="btn btn-info" @onclick="@(x => UpdateData())">Refresh</button>
+
+
+
+@code {
+    public IBookstoreRepository repo => Service;
+
+    public IEnumerable<Transaction> AllOrders { get; set; }
+    public IEnumerable<Transaction> UnshippedOrders { get; set; }
+    public IEnumerable<Transaction> ShippedOrders { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        await UpdateData();
+    }
+
+    public async Task UpdateData()
+    {
+        AllOrders = await repo.Transactions.ToListAsync();
+        UnshippedOrders = AllOrders.Where(o => !o.Shipped);
+        ShippedOrders = AllOrders.Where(o => o.Shipped);
+    }
+
+    public void MarkOrderAsShipped(int id) => ChangeShippingStatus(id, true);
+    public void MarkOrderAsUnshipped(int id) => ChangeShippingStatus(id, false);
+
+    public void ChangeShippingStatus(int id, bool shipped)
+    {
+        Transaction t = repo.Transactions.FirstOrDefault(t => t.ID == id);
+        t.Shipped = shipped;
+        repo.SaveTransaction(t);
+    }
+
+}

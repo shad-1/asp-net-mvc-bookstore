@@ -1,0 +1,112 @@
+﻿@page "/admin"
+@page "/admin/books"
+@inherits OwningComponentBase<IBookstoreRepository>
+
+    <NavLink class="btn btn btn-primary mb-2" href="/admin/books/add">Add a Book</NavLink>
+
+    <table class="table table-sm table-striped table-bordered">
+
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (BookList?.Count() > 0)
+            {
+                foreach (Book b in BookList)
+                {
+                    <tr>
+                        <td>@b.Title</td>
+                        <td>@b.Author</td>
+                        <td>$@b.Price.ToString("#.00")</td>
+                        <td>
+                            <NavLink class="btn btn-sm btn-info" href="@GetDetailUrl(b.BookId)">Details</NavLink>
+                        </td>
+                        <td>
+                            <NavLink class="btn btn-sm btn-warning" href="@GetEditUrl(b.BookId)">Edit</NavLink>
+                        </td>
+                        <td>
+                            <NavLink class="btn btn-sm btn-danger" data-toggle="modal" data-target="#DeleteConfirmationModal" @onclick="(x => SetUpDeleteModal(b))">Delete</NavLink>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">No books to display...this might be a problem for a book store.</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+    <div class="modal" tabindex="-1" role="dialog" id="DeleteConfirmationModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="delete">@ModalBody</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="(x => ClearPendingDeletion())">Cancel</button>
+                    <button type="button" class="btn btn-danger" @onclick="(x => DeleteBook())" data-dismiss="modal">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @code {
+        public IBookstoreRepository repo => Service;
+
+        public IEnumerable<Book> BookList { get; set; }
+
+        protected async override Task OnInitializedAsync()
+        {
+            BookList = await UpdateData();
+        }
+
+        public async Task<List<Book>> UpdateData()
+        {
+            return await repo.BooksData.ToListAsync();
+        }
+
+        public string GetDetailUrl(long id) => $"admin/books/detail/{id}";
+        public string GetEditUrl(long id) => $"admin/books/edit/{id}";
+
+        public async void DeleteBook(Book? b = null)
+        {
+            if (b == null)
+            {
+                b = BookToDelete;
+            }
+            repo.DeleteBook(b);
+            BookList = await UpdateData();
+        }
+
+        public string ModalBody = "";
+        public Book BookToDelete = new Book();
+
+        public void SetUpDeleteModal(Book b)
+        {
+            ModalBody = $"Are you sure you want to delete {b.Title} by {b.Author}?";
+            BookToDelete = b;
+        }
+
+        public void ClearPendingDeletion()
+        {
+            BookToDelete = new Book();
+            ModalBody = "";
+        }
+
+    }
+

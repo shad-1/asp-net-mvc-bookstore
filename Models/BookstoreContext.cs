@@ -19,7 +19,7 @@ namespace bookstore.Models
         {
         }
 
-        public virtual DbSet<Books> Books { get; set; }
+        public virtual DbSet<Book> Books { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -34,7 +34,7 @@ namespace bookstore.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //* I am leaving all of this key/constraint info in the code in case I want to scrap the db file and start out with the same structure. 
-            modelBuilder.Entity<Books>(entity =>
+            modelBuilder.Entity<Book>(entity =>
             {
                 entity.HasKey(e => e.BookId);
 
@@ -42,8 +42,7 @@ namespace bookstore.Models
                     .IsUnique();
 
                 entity.Property(e => e.BookId)
-                    .HasColumnName("BookID")
-                    .ValueGeneratedNever();
+                    .HasColumnName("BookID");
 
                 entity.Property(e => e.Author).IsRequired();
 

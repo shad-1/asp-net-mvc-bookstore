@@ -16,7 +16,7 @@ namespace bookstore.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.22");
 
-            modelBuilder.Entity("bookstore.Models.Books", b =>
+            modelBuilder.Entity("bookstore.Models.Book", b =>
                 {
                     b.Property<long>("BookId")
                         .HasColumnName("BookID")
@@ -117,6 +117,9 @@ namespace bookstore.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
+                    b.Property<bool>("Shipped")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -134,7 +137,7 @@ namespace bookstore.Migrations
 
             modelBuilder.Entity("bookstore.Models.LineItem", b =>
                 {
-                    b.HasOne("bookstore.Models.Books", "Book")
+                    b.HasOne("bookstore.Models.Book", "Book")
                         .WithMany()
                         .HasForeignKey("BookId");
 
