@@ -24,13 +24,13 @@
                         <td>@b.Author</td>
                         <td>$@b.Price.ToString("#.00")</td>
                         <td>
-                            <NavLink class="btn btn-sm btn-info" href="@GetDetailUrl(b.BookId)">Details</NavLink>
+                            <NavLink class="btn btn-sm btn-info" href="@GetDetailUrl(b.BookId)" data-toggle="tooltip" data-placement="top" title="View the details for this book">Details</NavLink>
                         </td>
                         <td>
-                            <NavLink class="btn btn-sm btn-warning" href="@GetEditUrl(b.BookId)">Edit</NavLink>
+                            <NavLink class="btn btn-sm btn-warning" href="@GetEditUrl(b.BookId)" data-toggle="tooltip" data-placement="top" title="Edit the details for this book">Edit</NavLink>
                         </td>
                         <td>
-                            <NavLink class="btn btn-sm btn-danger" data-toggle="modal" data-target="#DeleteConfirmationModal" @onclick="(x => SetUpDeleteModal(b))">Delete</NavLink>
+                            <NavLink class="btn btn-sm btn-danger" data-toggle="modal" data-target="#DeleteConfirmationModal" @onclick="(x => SetUpDeleteModal(b))" >Delete</NavLink>
                         </td>
                     </tr>
                 }

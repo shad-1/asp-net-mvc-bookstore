@@ -9,3 +9,8 @@
 <base href="/" />
 <component type="typeof(bookstore.Pages.Admin.Routed)" render-mode="Server" />
 <script src="/_framework/blazor.server.js"></script>
+
+@*turn on tooltips for all razor pages inheriting this layout*@
+<script type="text/javascript">$(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })</script>
